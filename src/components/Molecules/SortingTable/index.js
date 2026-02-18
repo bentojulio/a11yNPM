@@ -49,6 +49,7 @@ const SortingTable = (
         onItemsPerPageChange, // function(itemsPerPage) => void
         paginationOptions, // array of numbers for items per page
         serverSidePagination = false, // if true, data is already paginated by server
+        hasColAndRowspan = true, // if true, shows rowSpan, colSpan and scope properties
         // Accessibility texts for sorting
         sortingTexts = {
             none: " Sem ordenação",
@@ -167,15 +168,21 @@ const SortingTable = (
         const textCenter = headerData.justifyCenter ? "text-center" : ""
         const bigWidth = headerData.bigWidth ? headerData.bigWidth : "auto"
         const id = headerData.id ? headerData.id : null;
-
-
+        
+        const conditionalProps = hasColAndRowspan ? {
+            rowSpan: nOfRows,
+            colSpan: nOfColumns,
+            scope: "col"
+        } : {};
+        
         switch (headerData.type) {
             case "Empty":
-                return (<th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} rowSpan={nOfRows} colSpan={nOfColumns} scope="col" className={`no_pointer`}>
+                return (  <th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} {...conditionalProps} className={`no_pointer`}>
                     <span className="visually-hidden">{headerData.name}</span>
-                </th>)
+                    </th>
+            )
             case "Text":
-                return (<th id={multiHeaders ? id : null} aria-label={headerData.ariaLabel ? ariaLabels[headerData.name] : null} key={index} style={{ width: bigWidth }} rowSpan={nOfRows} colSpan={nOfColumns} scope="col" className={`${textCenter} no_pointer`}>
+                return (<th id={multiHeaders ? id : null} aria-label={headerData.ariaLabel ? ariaLabels[headerData.name] : null} key={index} style={{ width: bigWidth }} {...conditionalProps} className={`${textCenter} no_pointer`}>
                     <span className="ama-typography-body text-center bold">{headerData.name}</span>
                 </th>)
             case "SortingText":
@@ -188,8 +195,13 @@ const SortingTable = (
                     if (!sameProp) return sortingTexts.none;
                     return sort.type === "desc" ? sortingTexts.descending : sortingTexts.ascending;
                 }
+                const sortingTextProps = hasColAndRowspan ? {
+                    rowSpan: nOfRows,
+                    colSpan: nOfColumns,
+                    scope: headerData.scope ? headerData.scope : "col"
+                } : {};
                 return (
-                    <th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} rowSpan={nOfRows} colSpan={nOfColumns} scope="col" aria-sort={getSortState()}>
+                    <th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} {...sortingTextProps} aria-sort={getSortState()}>
                         <button
                             type="button"
                             className={`sorting-header-button ${sameProp ? 'show_icon' : ''}`}
@@ -208,7 +220,7 @@ const SortingTable = (
                 )
             case "Icon":
                 return (
-                    <th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} rowSpan={nOfRows} colSpan={nOfColumns} scope="col" className={`${textCenter} ${noPointer} first-show`}>
+                    <th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} {...conditionalProps} className={`${textCenter} ${noPointer} first-show`}>
                         <Icon name={headerData.name} />
                         <span className="visually-hidden">{headerData.description}</span>
                     </th>
@@ -223,7 +235,7 @@ const SortingTable = (
                     return sort.type === "desc" ? sortingTexts.descending : sortingTexts.ascending;
                 }
                 return (
-                    <th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} rowSpan={nOfRows} colSpan={nOfColumns} scope="col" aria-sort={getSortStateIcon()}>
+                    <th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} {...conditionalProps} aria-sort={getSortStateIcon()}>
                         <button
                             type="button"
                             className={`sorting-header-button first-show ${sameProp ? 'show_icon' : ''}`}
@@ -242,7 +254,7 @@ const SortingTable = (
                 )
             case "Checkbox":
                 const checkboxId = `checkbox_all_${Math.random().toString(36).substring(2, 15)}`
-                return (<th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} rowSpan={nOfRows} colSpan={nOfColumns} scope="col" className={`${textCenter} checkbox px-4`}>
+                return (<th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} {...conditionalProps} className={`${textCenter} checkbox px-4`}>
                     <input type="checkbox" id={checkboxId} aria-label="selecionar registos" aria-description="selecionar todos os registos" checked={checkedItems.length === dataList.length} onChange={() => addCheckboxes('all')} value="all"></input>
                 </th>)
         }

@@ -61,6 +61,12 @@
   background-color: #f2f2f2;
 }
 
+.multi-select-no-options {
+  color: #6c757d;
+  cursor: default;
+  pointer-events: none;
+}
+
 input.multi-search-input:focus {
   outline: none !important;
   box-shadow: none !important;
@@ -114,6 +120,6 @@ input.multi-search-input:focus {
   color: #198754;
 }
 
-.bdage-label {
+.badge-label {
   font-size: 1rem !important;
 }
