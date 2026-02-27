@@ -20,7 +20,10 @@ const Template = (args) => {
       {...args}
       value={value}
       onChange={setValue}
-    />
+      onInputChange={(e) => {
+        console.log("onInputChange", e);
+      }}
+      />
   );
 };
 
@@ -86,4 +89,51 @@ DarkThemeWithValidation.args = {
   required: true,
   error: "Campo obrigatório no tema escuro",
   id: "dark-validation",
+};
+
+const manyOptions = [
+  { value: "", label: "Selecione uma opção" },
+  { value: "1", label: "Lisboa" },
+  { value: "2", label: "Porto" },
+  { value: "3", label: "Coimbra" },
+  { value: "4", label: "Braga" },
+  { value: "5", label: "Faro" },
+  { value: "6", label: "Évora" },
+  { value: "7", label: "Aveiro" },
+  { value: "8", label: "Setúbal" },
+  { value: "9", label: "Viseu" },
+  { value: "10", label: "Leiria" },
+];
+
+export const Searchable = Template.bind({});
+Searchable.args = {
+  label: "Pesquisar cidade",
+  options: manyOptions,
+  value: "",
+  isSearch: true,
+  placeholder: "Escreva para pesquisar...",
+  id: "searchable-select",
+};
+
+export const SearchableDark = Template.bind({});
+SearchableDark.args = {
+  label: "Pesquisar cidade (tema escuro)",
+  options: manyOptions,
+  value: "",
+  isSearch: true,
+  placeholder: "Escreva para pesquisar...",
+  darkTheme: "dark",
+  id: "searchable-select-dark",
+};
+
+export const SearchableWithError = Template.bind({});
+SearchableWithError.args = {
+  label: "Pesquisar cidade (com erro)",
+  options: manyOptions,
+  value: "",
+  isSearch: true,
+  placeholder: "Escreva para pesquisar...",
+  error: "Por favor, selecione uma cidade",
+  required: true,
+  id: "searchable-select-error",
 };

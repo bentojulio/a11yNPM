@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import "./style.css";
 import { Icon } from "../../Atoms/Icon"
 import { Button } from "../../Atoms/Button"
@@ -73,6 +73,17 @@ const SortingTable = (
 
     // Determine if controlled or uncontrolled
     const isControlled = typeof currentPage === 'number';
+
+    // Select-all checkbox ref for indeterminate state
+    const selectAllRef = useRef(null);
+    const isAllChecked = checkedItems.length > 0 && checkedItems.length === dataList.length;
+    const isIndeterminate = checkedItems.length > 0 && checkedItems.length < dataList.length;
+
+    useEffect(() => {
+        if (selectAllRef.current) {
+            selectAllRef.current.indeterminate = isIndeterminate;
+        }
+    }, [isIndeterminate]);
 
     // Checkbox Handler
     const addCheckboxes = (value) => {
@@ -253,9 +264,15 @@ const SortingTable = (
                     </th>
                 )
             case "Checkbox":
-                const checkboxId = `checkbox_all_${Math.random().toString(36).substring(2, 15)}`
                 return (<th id={multiHeaders ? id : null} key={index} style={{ width: bigWidth }} {...conditionalProps} className={`${textCenter} checkbox px-4`}>
-                    <input type="checkbox" id={checkboxId} aria-label="selecionar registos" aria-description="selecionar todos os registos" checked={checkedItems.length === dataList.length} onChange={() => addCheckboxes('all')} value="all"></input>
+                    <input
+                        ref={selectAllRef}
+                        type="checkbox"
+                        aria-label="selecionar registos"
+                        checked={isAllChecked}
+                        onChange={() => addCheckboxes('all')}
+                        value="all"
+                    />
                 </th>)
         }
     }

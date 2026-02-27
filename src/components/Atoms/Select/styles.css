@@ -68,4 +68,103 @@
 .ama-select-atom.dark .select-error-feedback {
   color: var(--ama-color-red-400);
 }
-  
+
+/* Searchable Select */
+.ama-select-search-wrapper {
+  position: relative;
+}
+
+.ama-select-search-input {
+  width: 100%;
+  cursor: text;
+  padding-right: 40px !important;
+}
+
+.ama-select-search-toggle {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  font-size: 12px;
+  color: var(--ama-color-brand-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.ama-select-search-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.ama-select-search-toggle.dark {
+  color: var(--ama-color-text-blue);
+}
+
+.ama-select-dropdown {
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 2px solid var(--ama-color-brand-primary);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.ama-select-dropdown.dark {
+  background: var(--ama-color-background-dark-darker);
+  border-color: var(--ama-color-text-blue);
+}
+
+.ama-select-dropdown-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.ama-select-dropdown-item.active {
+  background: var(--ama-color-brand-primary);
+  color: #fff;
+}
+
+.ama-select-dropdown.dark .ama-select-dropdown-item.active {
+  background: var(--ama-color-text-blue);
+  color: #fff;
+}
+
+.ama-select-dropdown-item.selected {
+  font-weight: 700;
+}
+
+.ama-select-dropdown-item:hover {
+  background: var(--ama-color-brand-primary);
+  color: #fff;
+}
+
+.ama-select-dropdown.dark .ama-select-dropdown-item:hover {
+  background: var(--ama-color-text-blue);
+  color: #fff;
+}
+
+.ama-select-dropdown-empty {
+  padding: 10px 14px;
+  font-size: 15px;
+  color: #999;
+  text-align: center;
+}
+
+.ama-select-dropdown.dark .ama-select-dropdown-empty {
+  color: #777;
+}
+

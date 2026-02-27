@@ -112,7 +112,7 @@
 .ama.table_primary .detail_link {
   font-size: 1.8rem;
   text-decoration: none !important;
-  color: var(--primary) !important;
+  color: var( --ama-color-brand-primary) !important;
   border: 0;
   background-color: transparent;
 }

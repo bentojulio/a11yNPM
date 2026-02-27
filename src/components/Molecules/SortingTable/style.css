@@ -222,6 +222,11 @@
     height: 18px;
     accent-color: var(--ama-color-brand-primary);
     flex-shrink: 0;
+    cursor: pointer;
+}
+
+.ama.sorting_table_responsive .sorting_table .checkbox input[type=checkbox]:indeterminate {
+    accent-color: var(--ama-color-brand-primary);
 }
 
 .ama.sorting_table_responsive {
