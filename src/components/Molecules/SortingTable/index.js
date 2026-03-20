@@ -76,36 +76,6 @@ const SortingTable = (
 
     // Select-all checkbox ref for indeterminate state
     const selectAllRef = useRef(null);
-    const isAllChecked = checkedItems.length > 0 && checkedItems.length === dataList.length;
-    const isIndeterminate = checkedItems.length > 0 && checkedItems.length < dataList.length;
-
-    useEffect(() => {
-        if (selectAllRef.current) {
-            selectAllRef.current.indeterminate = isIndeterminate;
-        }
-    }, [isIndeterminate]);
-
-    // Checkbox Handler
-    const addCheckboxes = (value) => {
-        if (!setCheckboxesSelected) return;
-        
-        if (value === 'all') {
-             if (checkedItems.length === dataList.length) {
-                setCheckboxesSelected([]);
-            } else {
-                setCheckboxesSelected(dataList);
-            }
-        } else {
-            const index = checkedItems.findIndex(item => item.id === value.id);
-            if (index === -1) {
-                setCheckboxesSelected([...checkedItems, value]);
-            } else {
-                const newChecked = [...checkedItems];
-                newChecked.splice(index, 1);
-                setCheckboxesSelected(newChecked);
-            }
-        }
-    }
     
     // Effective values
     const page = isControlled ? currentPage : internalPage;
@@ -165,6 +135,94 @@ const SortingTable = (
     const visibleData = serverSidePagination 
         ? (dataList || [])
         : (dataList ? dataList.slice((page - 1) * nItemsCurrent, (page - 1) * nItemsCurrent + nItemsCurrent) : []);
+
+    // Visible rows info (current page)
+    const visibleIds = visibleData.map(row => row.id);
+    const visibleCount = visibleIds.length;
+    const selectedVisibleCount = checkedItems.filter(item => visibleIds.includes(item.id)).length;
+
+    // Global selection state (all selectable items with valid id)
+    const selectableItems = dataList
+        ? dataList.filter(row => row && row.id !== undefined && row.id !== null)
+        : [];
+    const totalItemsCount = selectableItems.length;
+    const totalSelectedCount = checkedItems.filter(
+        item => item && item.id !== undefined && item.id !== null
+    ).length;
+    // All checked = every selectable item id is present in checkedItems (ignoring extras)
+    const isAllChecked =
+        totalItemsCount > 0 &&
+        selectableItems.every(row =>
+            checkedItems.some(item => item && item.id === row.id)
+        );
+    // Indeterminate = at least one selectable item selected, but not all
+    const isIndeterminate =
+        totalItemsCount > 0 &&
+        !isAllChecked &&
+        selectableItems.some(row =>
+            checkedItems.some(item => item && item.id === row.id)
+        );
+
+    useEffect(() => {
+        if (selectAllRef.current) {
+            selectAllRef.current.indeterminate = isIndeterminate;
+        }
+    }, [isIndeterminate]);
+
+    // Checkbox Handler
+    const addCheckboxes = (value) => {
+        if (!setCheckboxesSelected) return;
+        
+        if (value === 'all') {
+            if (serverSidePagination) {
+                // SERVER-SIDE PAGINATION:
+                // Toggle selection only for currently visible rows (API only returned this page)
+                const allVisibleSelected = visibleCount > 0 && selectedVisibleCount === visibleCount;
+                if (allVisibleSelected) {
+                    // Unselect all visible rows, keep selections from other pages/requests
+                    const remaining = checkedItems.filter(item => !visibleIds.includes(item.id));
+                    setCheckboxesSelected(remaining);
+                } else {
+                    // Select all visible rows, preserving existing selections and avoiding duplicates
+                    const newSelected = [...checkedItems];
+                    visibleData.forEach(row => {
+                        if (!newSelected.some(item => item.id === row.id)) {
+                            newSelected.push(row);
+                        }
+                    });
+                    setCheckboxesSelected(newSelected);
+                }
+            } else {
+                // CLIENT-SIDE PAGINATION:
+                // We have all items in dataList in memory
+                if (isAllChecked) {
+                    // Unselect all items that belong to this table (selectableItems)
+                    const remaining = checkedItems.filter(
+                        item => !selectableItems.some(row => row.id === item.id)
+                    );
+                    setCheckboxesSelected(remaining);
+                } else {
+                    // Select all items with valid ids for this table
+                    const newSelected = [...checkedItems];
+                    selectableItems.forEach(row => {
+                        if (!newSelected.some(item => item.id === row.id)) {
+                            newSelected.push(row);
+                        }
+                    });
+                    setCheckboxesSelected(newSelected);
+                }
+            }
+        } else {
+            const index = checkedItems.findIndex(item => item.id === value.id);
+            if (index === -1) {
+                setCheckboxesSelected([...checkedItems, value]);
+            } else {
+                const newChecked = [...checkedItems];
+                newChecked.splice(index, 1);
+                setCheckboxesSelected(newChecked);
+            }
+        }
+    }
 
     const handleItemsPerPageChange = (newVal) => {
         if (!isControlled) setInternalItemsPerPage(newVal);

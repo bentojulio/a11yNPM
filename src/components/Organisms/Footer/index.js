@@ -3,6 +3,9 @@ import React from "react";
 
 export function Footer({ darkTheme }) {
   const theme = darkTheme === "dark" ? "dark" : ""
+  const amaLogoSrc = darkTheme === "dark"
+    ? "/img/Logotipo_ARTE__Horizontal_branco_pt.png"
+    : "/img/Logotipo_ARTE__Horizontal_cor_pt.png";
   return (
     <footer className={`py-5 ama ${theme}`}>
       <div className="container">
@@ -94,7 +97,7 @@ export function Footer({ darkTheme }) {
             <img
               decoding="async"
               alt="ARTE - Agência para a Reforma Tecnológica do Estado"
-              src="https://selo.usabilidade.gov.pt/wp-content/uploads/2025/09/arte-logo.png"
+              src={amaLogoSrc}
               width="210"
               className="img-fluid"
             />
