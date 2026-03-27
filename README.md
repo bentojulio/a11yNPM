@@ -1,4 +1,4 @@
-# AMA - Design-System 1.1.87
+# ARTE - Design-System 1.0.0
 
 O Ama Design System é uma biblioteca de componentes para servir as seguintes aplicações:
 
@@ -11,12 +11,12 @@ Para mais informações, visite o site, onde se encontra todos os componentes e 
 
 ## Instalação
 ```
-    npm install ama-design-system
+    npm install @a12e/accessmonitor-ds
 ```
 
 É necessário importar os estilos gerais
 ```
-    import 'ama-design-system/dist/index.css';
+    import '@a12e/accessmonitor-ds/dist/index.css';
 ```
 
 Para que os Icons funcionem devidamente, foi criada uma pasta "styles" se não existia ainda, e foi copiado um ficheiro css
@@ -31,7 +31,7 @@ chamado fontStyle onde contém os importes dos Icons.
 
 ## Utilização
 ```
-    import { Icon } from 'ama-design-system'
+    import { Icon } from '@a12e/accessmonitor-ds'
 
     <Icon name={"AMA-SeloDark2-Line"} />
 ```
