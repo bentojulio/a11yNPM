@@ -9,6 +9,7 @@ jobs:
 
     permissions:
       contents: read
+      id-token: write   # 🔑 OIDC
 
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +22,4 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - name: Publish with token
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --access public --provenance
