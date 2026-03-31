@@ -1,4 +1,4 @@
-name: publish-npm-token
+name: publish-npm
 
 on:
   workflow_dispatch:
