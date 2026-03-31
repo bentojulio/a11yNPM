@@ -1,6 +1,6 @@
 {
   "name": "@a12e/accessmonitor-ds",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
   "author": "ARTE",
@@ -11,7 +11,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-lib": "rollup -c",
-    "postinstall": "node copyfiles.js",  
+    "postinstall": "node copyfiles.js",
     "release": "npm run build && changeset publish"
   },
   "eslintConfig": {
