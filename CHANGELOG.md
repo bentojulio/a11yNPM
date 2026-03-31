@@ -1,5 +1,11 @@
 # @a12e/accessmonitor-ds
 
+## 1.0.2
+
+### Patch Changes
+
+- 88fd299: update package json config to solve dependecy conflicts
+
 ## 1.0.1
 
 ### Patch Changes
