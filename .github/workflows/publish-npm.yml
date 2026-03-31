@@ -1,4 +1,4 @@
-name: publish-npm
+name: publish-npm-token
 
 on:
   workflow_dispatch:
@@ -9,29 +9,19 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write   # 🔑 necessário para OIDC
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js (OIDC ready)
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://registry.npmjs.org'   # 🔴 CRÍTICO
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
-        run: npm install
+      - run: npm install
+      - run: npm run build
 
-      - name: Build
-        run: npm run build
-
-      # DEBUG (opcional, podes remover depois)
-      - name: Debug registry
-        run: |
-          npm config get registry
-          npm whoami || echo "not logged in (expected with OIDC)"
-
-      - name: Publish (OIDC)
-        run: npm publish --access public --provenance
+      - name: Publish with token
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
