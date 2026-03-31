@@ -1,4 +1,4 @@
-name: publish-npm-test
+name: publish-npm.yml
 
 on:
   workflow_dispatch:
