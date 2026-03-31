@@ -8,7 +8,6 @@ export const DashboardMenu = ({ menuItems, onMenuItemClick, activeItem, darkThem
     const [openSubmenu, setOpenSubmenu] = useState(localStorage.getItem("openSubmenu") ? JSON.parse(localStorage.getItem("openSubmenu")) : { id: null, label: "", icon: "" });
     const theme = darkTheme ? "dark" : "";
 
-    // Keyboard navigation
     const handleKeyDown = (e, item, index) => {
         if (e.key === "Enter" || e.key === " ") {
             handleMenuClick(item);
@@ -39,7 +38,6 @@ export const DashboardMenu = ({ menuItems, onMenuItemClick, activeItem, darkThem
     };
 
     useEffect(() => {
-        // Ensure the active item is set correctly on mount
         if (activeItem) {
             const activeMenuItem = menuItems.find(item => item.id === activeItem);
             if (activeMenuItem) {

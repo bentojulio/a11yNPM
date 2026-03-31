@@ -11,7 +11,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-lib": "rollup -c",
-    "postinstall": "node copyfiles.js"
+    "postinstall": "node copyfiles.js",  
+    "release": "npm run build && changeset publish"
   },
   "eslintConfig": {
     "extends": [
