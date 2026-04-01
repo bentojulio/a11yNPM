@@ -1,4 +1,4 @@
-# ARTE - Design-System 1.0.0
+# ARTE - Design-System 1.0.1
 
 O Ama Design System é uma biblioteca de componentes para servir as seguintes aplicações:
 
