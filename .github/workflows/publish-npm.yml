@@ -7,36 +7,38 @@ on:
     paths:
       - 'src/tests-metadata.ts'
       - '.changeset/**'
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+
     permissions:
-      contents: write  
-      pull-requests: write 
-      id-token: write  
+      contents: write
+      pull-requests: write
+      id-token: write   # 🔑 necessário para Trusted Publishing
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+          registry-url: 'https://registry.npmjs.org'  # 🔑 obrigatório
 
       - name: Upgrade npm for Trusted Publishing
         run: npm install -g npm@11.11.1
 
       - name: Install Dependencies
         run: npm install
-      
+
       - name: Build Package
         run: npm run build
-        
+
       - name: Create Release PR or Versioning
         id: changesets
         uses: changesets/action@v1
@@ -44,21 +46,20 @@ jobs:
           publish: echo "Versioning complete, handing over to manual publish"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish to NPM (Manual OIDC)
+
+      - name: Publish to NPM (OIDC)
         id: npm_publish
         if: github.ref_name == 'main' && steps.changesets.outputs.hasChangesets == 'false'
         run: |
           npm publish --access public --provenance
           echo "done=true" >> $GITHUB_OUTPUT
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create GitHub Release
         if: steps.npm_publish.outputs.done == 'true'
         run: |
           PKG_NAME=$(node -p "require('./package.json').name")
           VERSION=$(node -p "require('./package.json').version")
           FULL_TAG="${PKG_NAME}@${VERSION}"
-          
+
           echo "Generating release for: $FULL_TAG"
           gh release create "$FULL_TAG" \
             --title "$FULL_TAG" \
