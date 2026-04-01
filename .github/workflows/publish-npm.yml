@@ -3,7 +3,7 @@ name: publish-npm
 on:
   push:
     branches:
-      - main   # 🔑 necessário para Trusted Publishing funcionar corretamente
+      - main   # 🔑 OIDC espera push na main
 
 jobs:
   publish:
@@ -11,7 +11,7 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write   # 🔑 OIDC obrigatório
+      id-token: write   # 🔑 necessário para Trusted Publishing
 
     steps:
       - name: Checkout
@@ -21,13 +21,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://registry.npmjs.org'   # 🔴 crítico para OIDC
+          registry-url: 'https://registry.npmjs.org'  # 🔴 crítico
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build
         run: npm run build
 
-      - name: Publish (Trusted Publishing)
+      # 🔍 Debug (ajuda a garantir que o binding está correto)
+      - name: Debug context
+        run: |
+          echo "REF=$GITHUB_REF"
+          echo "SHA=$GITHUB_SHA"
+          npm config get registry
+
+      - name: Publish (OIDC)
         run: npm publish --access public --provenance
