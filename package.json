@@ -1,5 +1,5 @@
 {
-  "name": "@a12e/accessmonitor-ds-2",
+  "name": "@a12e/accessmonitor-ds",
   "version": "1.0.0",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
