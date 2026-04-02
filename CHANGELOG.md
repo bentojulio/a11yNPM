@@ -1,5 +1,12 @@
 # @a12e/accessmonitor-ds
 
+## 1.0.3
+
+### Patch Changes
+
+- aaad2f3: change token to github token
+- e76b2e8: update version of package
+
 ## 1.0.2
 
 ### Patch Changes
