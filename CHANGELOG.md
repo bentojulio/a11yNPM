@@ -1,5 +1,11 @@
 # @a12e/accessmonitor-ds
 
+## 1.0.4
+
+### Patch Changes
+
+- 450bddb: add config repository in package json
+
 ## 1.0.3
 
 ### Patch Changes
