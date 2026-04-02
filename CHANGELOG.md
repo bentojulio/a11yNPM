@@ -1,5 +1,11 @@
 # @a12e/accessmonitor-ds
 
+## 1.0.5
+
+### Patch Changes
+
+- de73c47: add last item of pagination as the length of data
+
 ## 1.0.4
 
 ### Patch Changes
