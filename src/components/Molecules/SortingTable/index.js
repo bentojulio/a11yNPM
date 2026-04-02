@@ -86,8 +86,9 @@ const SortingTable = (
     
     // Generate pagination options dynamically if not provided
     const defaultPaginationOptions = [10, 25, 50, 100, 250, 500].filter(opt => opt < nAllItems);
-    if (!defaultPaginationOptions.includes(nAllItems)) defaultPaginationOptions.push(nAllItems);
-    const pageOptions = Array.isArray(paginationOptions) && paginationOptions.length > 0 ? paginationOptions : defaultPaginationOptions;
+    
+    const baseOptions = Array.isArray(paginationOptions) && paginationOptions.length > 0 ? paginationOptions : defaultPaginationOptions;
+    const pageOptions = baseOptions[baseOptions.length - 1] === nAllItems ? baseOptions : [...baseOptions.filter(opt => opt < nAllItems), nAllItems];
 
     // Handlers
     const handlePageChange = (newPage) => {
