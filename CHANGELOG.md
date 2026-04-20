@@ -1,5 +1,11 @@
 # @a12e/accessmonitor-ds
 
+## 1.0.6
+
+### Patch Changes
+
+- d287847: Update table and restructuring the menu
+
 ## 1.0.5
 
 ### Patch Changes
