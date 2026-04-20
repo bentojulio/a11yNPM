@@ -1,42 +1,50 @@
+/* ==========================================================================
+   DashboardMenu — padrão AMS (amagovpt.github.io/booka11y/ams-r)
+   ========================================================================== */
+
 .dashboard-menu {
     background-color: var(--ama-color-background-dark-darker);
-    color: #fff;    
+    color: #fff;
     display: flex;
     flex-direction: column;
     gap: 16px;
     height: 88vh;
     width: 100%;
-}
-.submenu-list {
-    list-style: none;
-    padding-left: 2rem;
-    margin: 0.5rem 0 0 0;
-    display: none;
-    transition: max-height 0.3s;
-}
-.submenu-list.open {
-    display: block;
-}
-.submenu-item {
-    padding: 0.5rem 0;
-    font-size: 1rem;
-    color: #fff;
-    cursor: pointer;
-}
-.submenu-item:hover {
-    text-decoration: underline;
-}
-.menu-info {
-    margin-top: 40px;
-    margin-left: 15px;
-    color: white;
-    font-family: Lato;
-    font-size: 1.5rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+    transition: width 0.3s ease, padding 0.3s ease;
+    overflow: visible;
+    position: relative;
+    box-sizing: border-box;
 }
 
+.dashboard-menu.collapsed {
+    width: auto;
+}
+
+/* Toggle button (collapse/expand do aside) */
+.toggle-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: white;
+    border: 2px solid transparent;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    align-self: flex-start;
+    transition: background-color 0.3s ease;
+}
+.toggle-menu:hover,
+.toggle-menu:focus-visible {
+    background-color: var(--ama-color-background-dark-lighter);
+}
+.toggle-menu-label {
+    color: white;
+}
+
+/* Lista principal */
 .menu-list {
     list-style: none;
     padding: 0;
@@ -46,6 +54,12 @@
     text-decoration: none;
     color: inherit;
 }
+
+.menu-item {
+    list-style: none;
+}
+
+/* Linhas do menu (top-level + submenu) */
 .menu-text, .submenu-text {
     display: flex;
     align-items: center;
@@ -58,101 +72,113 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     border: 2px solid transparent;
+    font-family: inherit;
+    text-align: left;
+}
+button.menu-text {
+    appearance: none;
+    margin: 0;
+    justify-content: flex-start;
 }
 
+.menu-text:hover,
+.menu-text:focus-visible,
+.submenu-text:hover,
+.submenu-link:hover,
+.submenu-link:focus-visible {
+    background-color: var(--ama-color-background-dark-lighter);
+}
 
-.menu-text.active {
-    background-color: var(--ama-color-background-dark-lighter) !important;
+/* Estado ativo (aria-current="page") — item não clicável, apenas descritivo */
+.menu-text.current,
+.submenu-link.current {
+    background-color: var(--ama-color-background-dark-lighter);
     border-bottom: 2px solid white;
+    cursor: default;
 }
 
+.menu-item.active,
 .submenu-text.active {
-    background-color: var(--ama-color-background-dark-lighter) !important;
-    border: 2px solid white;
-
-}
-
-
-.menu-text:hover {
     background-color: var(--ama-color-background-dark-lighter);
 }
 
-.submenu-text:hover {
+/* Parent de item ativo */
+.menu-item.parent-active,
+.menu-text.parent-active {
     background-color: var(--ama-color-background-dark-lighter);
 }
 
-.menu-icon {
-    margin-right: 1rem;
-    font-size: 1.5rem;
-}
-
-.menu-label, .submenu-link > i {
+/* Rótulos e ícones */
+.menu-label {
     color: white !important;
     font-size: 1rem;
     font-weight: 500;
 }
 
+/* Indicador (chevron) — rotação via CSS baseada em aria-expanded (padrão AMS) */
+.indicator {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+.menu-text[aria-expanded="true"] .indicator {
+    transform: rotate(180deg);
+}
+
+/* Submenu */
+.submenu-list {
+    list-style: none;
+    padding-left: 2rem;
+    margin: 0.5rem 0 0 0;
+    border-left: 2px solid var(--ama-color-background-dark-lighter);
+}
+.submenu-list[hidden] {
+    display: none;
+}
 .submenu-link {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
+    padding: 0.75rem 1rem;
     border: 2px solid transparent;
-   
+    color: white !important;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
 }
 
-/** Dark Theme **/
+/* ===== Dark Theme (prop darkTheme) ===== */
 .dashboard-menu.dark {
     background-color: var(--ama-color-background-dark-darker);
     color: var(--ama-color-text-blue);
 }
-
-.menu-info.dark {
-    color: var(--ama-color-text-blue);
-}
-
 .menu-item.dark {
     color: var(--ama-color-text-blue);
     background-color: var(--ama-color-background-dark-darker);
 }
-
 .menu-item.dark.active {
-    background-color: var( --ama-color-background-dark-lighter);
+    background-color: var(--ama-color-background-dark-lighter);
     border-bottom: 2px solid var(--ama-color-text-blue);
 }
-
 .menu-item.dark:hover {
     background-color: var(--ama-color-background-dark-lighter);
 }
 
-.submenu-arrow {
-    margin-left: auto;
-    font-size: 0.9em;
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.2s;
-    border: none;
-    background: transparent;
-    color: #fff;
+/* Menu info (cabeçalho opcional) */
+.menu-info {
+    margin-top: 40px;
+    margin-left: 15px;
+    color: white;
+    font-family: Lato;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
-.submenu-arrow.open {
-    transform: rotate(180deg);
-}
-
-.menu-item.has-submenu {
-    flex-direction: column;
-    align-items: flex-start;
-    position: relative;
+.menu-info.dark {
+    color: var(--ama-color-text-blue);
 }
 
-.menu-item .submenu-list {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 0;
-    background: transparent;
-    position: static;
-}
-
-.parent-active {
-    background-color: var(--ama-color-background-dark-lighter);
+/* Aside colapsado — esconde a lista, mantém o toggle visível */
+.dashboard-menu.collapsed .menu-list {
+    display: none;
 }
