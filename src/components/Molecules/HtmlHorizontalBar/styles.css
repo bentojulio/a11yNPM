@@ -1,0 +1,290 @@
+.ama.html-horizontal-bar {
+  width: 100%;
+  font-family: var(--font-lato, sans-serif);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* ── Visually hidden utilities (screen-reader only) ── */
+.ama.html-horizontal-bar .html-horizontal-bar__sr-live,
+.ama.html-horizontal-bar .html-horizontal-bar__sr-table {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Chart title / figcaption ── */
+.ama.html-horizontal-bar .html-horizontal-bar__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ama-color-text-dark, #222);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* ── Legend ── */
+.ama.html-horizontal-bar .html-horizontal-bar__legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  justify-content: flex-end;
+  padding-right: 0;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__legend-color {
+  display: inline-block;
+  width: 40px;
+  height: 14px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__legend-text {
+  color: var(--ama-color-text-dark, #222);
+  font-size: 0.875rem;
+}
+
+/* ── Two-column body: [labels col] | [chart col] ── */
+.ama.html-horizontal-bar .html-horizontal-bar__body {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+/* Label column */
+.ama.html-horizontal-bar .html-horizontal-bar__labels-col {
+  flex-shrink: 0;
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* Align rows to same height as bar rows */
+  padding-top: 0;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__label {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  padding-right: 10px;
+  color: var(--ama-color-text-dark, #222);
+  line-height: 1.3;
+  font-size: 0.8125rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__label mark {
+  background-color: transparent;
+  font-weight: 700;
+  color: inherit;
+  padding: 0;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__label code {
+  font-family: monospace;
+  font-size: 0.875em;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+/* Chart column */
+.ama.html-horizontal-bar .html-horizontal-bar__chart-col {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Grid lines ── */
+.ama.html-horizontal-bar .html-horizontal-bar__grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__grid-line {
+  position: absolute;
+  top: 0;
+  bottom: 26px; /* leave space for x-axis */
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: translateX(-50%);
+}
+
+/* ── Bar rows ── */
+.ama.html-horizontal-bar .html-horizontal-bar__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__row {
+  display: flex;
+  align-items: center;
+}
+
+/* ── Track (focusable) ── */
+.ama.html-horizontal-bar .html-horizontal-bar__track {
+  width: 100%;
+  height: 22px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  position: relative;
+  cursor: default;
+  overflow: visible;
+}
+
+/* Focus ring — WCAG 2.4.11 Focus Appearance */
+.ama.html-horizontal-bar .html-horizontal-bar__track:focus {
+  outline: none;
+}
+.ama.html-horizontal-bar .html-horizontal-bar__track:focus-visible {
+  outline: 3px solid var(--ama-color-focus, #005fcc);
+  outline-offset: 2px;
+}
+
+/* ── Bar fill ── */
+.ama.html-horizontal-bar .html-horizontal-bar__bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  pointer-events: none;
+}
+
+/* ── Tooltip ── */
+.ama.html-horizontal-bar .html-horizontal-bar__tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--ama-color-tooltip-bg, rgba(0,0,0,0.82));
+  color: var(--ama-color-tooltip-text, #fff);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  padding: 6px 10px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  min-width: 120px;
+  max-width: 300px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--ama-color-tooltip-bg, rgba(0,0,0,0.82));
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__tooltip-label {
+  font-weight: 400;
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__tooltip-value {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ── X-axis tick labels ── */
+.ama.html-horizontal-bar .html-horizontal-bar__x-axis {
+  position: relative;
+  height: 22px;
+  margin-top: 4px;
+  z-index: 1;
+}
+
+.ama.html-horizontal-bar .html-horizontal-bar__x-tick {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--ama-color-text-muted, #555);
+  top: 0;
+  white-space: nowrap;
+}
+
+/* ── X-axis label ── */
+.ama.html-horizontal-bar .html-horizontal-bar__x-axis-label {
+  text-align: center;
+  margin-top: 4px;
+  font-size: 0.875rem;
+  color: var(--ama-color-text-dark, #222);
+  padding-left: 340px; /* align with chart col */
+}
+
+/* ── Dark theme ── */
+.ama.html-horizontal-bar.dark .html-horizontal-bar__title,
+.ama.html-horizontal-bar.dark .html-horizontal-bar__legend-text,
+.ama.html-horizontal-bar.dark .html-horizontal-bar__label,
+.ama.html-horizontal-bar.dark .html-horizontal-bar__x-tick,
+.ama.html-horizontal-bar.dark .html-horizontal-bar__x-axis-label {
+  color: #e0e0e0;
+}
+
+.ama.html-horizontal-bar.dark .html-horizontal-bar__label code {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ama.html-horizontal-bar.dark .html-horizontal-bar__track {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ama.html-horizontal-bar.dark .html-horizontal-bar__grid-line {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.ama.html-horizontal-bar.dark .html-horizontal-bar__track:focus-visible {
+  outline-color: var(--ama-color-focus-dark, #66aaff);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .ama.html-horizontal-bar .html-horizontal-bar__labels-col {
+    width: 180px;
+  }
+  .ama.html-horizontal-bar .html-horizontal-bar__x-axis-label {
+    padding-left: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ama.html-horizontal-bar .html-horizontal-bar__body {
+    flex-direction: column;
+  }
+  .ama.html-horizontal-bar .html-horizontal-bar__labels-col {
+    width: 100%;
+  }
+  .ama.html-horizontal-bar .html-horizontal-bar__label {
+    justify-content: flex-start;
+    text-align: left;
+    padding-right: 0;
+  }
+  .ama.html-horizontal-bar .html-horizontal-bar__x-axis-label {
+    padding-left: 0;
+  }
+}

@@ -19,6 +19,7 @@ export * from "./Atoms/Select";
 export * from "./Atoms/MultiSelect";
 
 // MOLECULES
+export * from "./Molecules/HtmlHorizontalBar";
 export * from "./Molecules/Tabs";
 export * from "./Molecules/Table";
 export * from "./Molecules/SortingTable";
