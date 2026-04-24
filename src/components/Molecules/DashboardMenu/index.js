@@ -10,7 +10,6 @@ export const DashboardMenu = ({ menuItems, onMenuItemClick, activeItem, darkThem
             ? JSON.parse(localStorage.getItem("openSubmenu"))
             : { id: null, label: "", icon: "" }
     );
-    const [collapsed, setCollapsed] = useState(false);
     const theme = darkTheme ? "dark" : "";
 
     const persistOpen = (value) => {
@@ -51,38 +50,17 @@ export const DashboardMenu = ({ menuItems, onMenuItemClick, activeItem, darkThem
 
     const currentId = typeof activeItem === "object" ? activeItem?.id : activeItem;
 
-    const toggleAside = () => setCollapsed(prev => !prev);
-
     return (
         <BrowserRouter basename={basename ? `/${basename}` : undefined}>
             <aside
                 id="asideCol"
-                className={`dashboard-menu ${theme} ${collapsed ? "collapsed" : ""}`}
+                className={`dashboard-menu ${theme}`}
             >
                 <nav aria-label="menu principal do AMS">
-                    <button
-                        type="button"
-                        id="toggleMenu"
-                        className={`toggle-menu ${theme}`}
-                        aria-controls="menu-ams"
-                        aria-expanded={!collapsed}
-                        aria-label={collapsed
-                            ? "menu do AMS fechado. pressione se pretender abrir"
-                            : "menu do AMS aberto. pressione se pretender fechar"}
-                        onClick={toggleAside}
-                    >
-                        <Icon
-                            name={collapsed ? "AMA-SetaDir-Line" : "AMA-SetaEsq-Line"}
-                            darkTheme={darkTheme}
-                        />
-                        <span className="toggle-menu-label">Menu</span>
-                    </button>
-
                     <ul
                         id="menu-ams"
                         aria-label="opções AMS"
                         className={`menu-list ${theme}`}
-                        hidden={collapsed}
                     >
                         {menuItems.map((item) => {
                             const isParentOfActive = item.submenu && item.submenu.some(sub => sub.id === currentId);
